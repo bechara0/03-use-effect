@@ -1,40 +1,47 @@
 import React, { useEffect, useState } from "react";
+import { AvisoComponent } from "./AvisoComponent";
 
 export const PruebasComponents = () => {
-	const [usuario, setUsuario] = useState("Juan Bechara");
-	const [fecha, setFecha] = useState("01-01-1998");
-	const modUsuario = (e) => {
-		setUsuario(e.target.value);
-	};
+  const [usuario, setUsuario] = useState("Juan Bechara");
+  const [fecha, setFecha] = useState("01-01-1998");
+  const [contador, setContador] = useState(0);
 
-	const cambiarFecha = (e) => {
-		setFecha(Date.now());
-	};
+  const modUsuario = (e) => {
+    setUsuario(e.target.value);
+  };
 
-	// con el [] solo se ejecuta una vez al cargar el componente
-	useEffect(() => {
-		console.log("Has cargado el componente PruebasComponente");
-	}, []);
+  const cambiarFecha = (e) => {
+    setFecha(Date.now());
+  };
 
-	//se ejecuta solo si cambio el usuario
-	useEffect(() => {
-		console.log("Has modificado el usuario");
-	}, [usuario]);
+  // con el [] solo se ejecuta una vez al cargar el componente
+  useEffect(() => {
+    console.log("Has cargado el componente PruebasComponente");
+  }, []);
 
-	return (
-		<div>
-			<h1>El Efecto - Hook useEffect</h1>
-			<strong className="label label-green">{usuario}</strong>
-			<strong className="label label-green">{fecha}</strong>
-			<p>
-				<input
-					type="text"
-					onChange={modUsuario}
-					placeholder="Cambia el nombre"
-				/>
+  //se ejecuta solo si cambio el usuario
+  useEffect(() => {
+    setContador(contador + 1);
+    console.log("Has modificado el usuario: " + contador);
+  }, [usuario]);
 
-				<button onClick={cambiarFecha}>Cambiar fecha</button>
-			</p>
-		</div>
-	);
+  return (
+    <div>
+      <h1>El Efecto - Hook useEffect</h1>
+      <strong className={contador >= 10 ? "label label-green" : "label"}>
+        {usuario}
+      </strong>
+      <strong className="label label-green">{fecha}</strong>
+      <p>
+        <input
+          type="text"
+          onChange={modUsuario}
+          placeholder="Cambia el nombre"
+        />
+
+        <button onClick={cambiarFecha}>Cambiar fecha</button>
+      </p>
+      {usuario == "Juancho" && <AvisoComponent />}
+    </div>
+  );
 };
